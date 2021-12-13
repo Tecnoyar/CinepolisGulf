@@ -2,15 +2,15 @@
   <x:Members>
     <x:Property Name="in_NoSociosDataTable" Type="InArgument(sd:DataTable)" />
     <x:Property Name="out_BlackListTrackingDT" Type="OutArgument(sd:DataTable)" />
-    <x:Property Name="in_TradFileName" Type="InArgument(x:String)" />
     <x:Property Name="in_BlackListFileName" Type="InArgument(x:String)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
-    <x:Property Name="in_VIPFileName" Type="InArgument(x:String)" />
+    <x:Property Name="in_SurveyVIPFileName" Type="InArgument(x:String)" />
+    <x:Property Name="in_SurveyTradFileName" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>714,1209</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1008,1209</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ManipulatingBlackListTracking_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="28">
@@ -89,9 +89,9 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Working on Trad file: &quot;+in_TradFileName]" />
-    <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[vipDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="434,87" sap2010:WorkflowViewState.IdRef="ReadRange_3" SheetName="[in_Config(&quot;VIPSheetName&quot;).ToString]" WorkbookPath="[&quot;Data\Temp\&quot;+in_VIPFileName]" />
-    <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[tradeDT]" DisplayName="Read Trade DT" sap:VirtualizedContainerService.HintSize="434,87" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="[in_Config(&quot;in_TradSheetName&quot;).ToString]" WorkbookPath="[&quot;Data\Temp\&quot;+in_TradFileName]">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Working on Trad file: &quot;+in_SurveyTradFileName]" />
+    <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[vipDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="434,87" sap2010:WorkflowViewState.IdRef="ReadRange_3" SheetName="[in_Config(&quot;SurveyVipSheetName&quot;).ToString]" WorkbookPath="[&quot;Data\Temp\&quot;+in_SurveyVIPFileName]" />
+    <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[tradeDT]" DisplayName="Read Trade DT" sap:VirtualizedContainerService.HintSize="434,87" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="[in_Config(&quot;SurveyTradSheetName&quot;).ToString]" WorkbookPath="[&quot;Data\Temp\&quot;+in_SurveyTradFileName]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>

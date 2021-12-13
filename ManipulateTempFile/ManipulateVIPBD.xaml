@@ -2,9 +2,9 @@
   <x:Members>
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_VIPBDFileName" Type="InArgument(x:String)" />
-    <x:Property Name="in_InputDatatable" Type="InArgument(sd:DataTable)" />
     <x:Property Name="in_BlackListTrackingDatatable" Type="InArgument(sd:DataTable)" />
     <x:Property Name="in_TypeOfPocess" Type="InArgument(x:String)" />
+    <x:Property Name="in_VIPDatatable" Type="InArgument(sd:DataTable)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -47,7 +47,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="23">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="46">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -71,11 +71,16 @@
       <AssemblyReference>datatable_to_html</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="ManipulateVIPBD" sap:VirtualizedContainerService.HintSize="1449,3331" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="sd:DataTable" Name="tempBdDT" />
+      <Variable x:TypeArguments="sd:DataTable" Name="vipBdDT" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -90,13 +95,13 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence sap:VirtualizedContainerService.HintSize="557,2430" sap2010:WorkflowViewState.IdRef="Sequence_8">
+        <Sequence sap:VirtualizedContainerService.HintSize="557,2784" sap2010:WorkflowViewState.IdRef="Sequence_8">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Sequence sap:VirtualizedContainerService.HintSize="515,2338" sap2010:WorkflowViewState.IdRef="Sequence_7">
+          <Sequence sap:VirtualizedContainerService.HintSize="515,2692" sap2010:WorkflowViewState.IdRef="Sequence_7">
             <Sequence.Variables>
               <Variable x:TypeArguments="sd:DataTable" Name="NDMailsDT" />
             </Sequence.Variables>
@@ -126,7 +131,7 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:ExcelReadRange Range="{x:Null}" AddHeaders="False" DataTable="[tempBdDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" SheetName="[in_Config(&quot;TempSheetName&quot;).ToString]">
+                    <ui:ExcelReadRange Range="{x:Null}" AddHeaders="False" DataTable="[vipBdDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" SheetName="[in_Config(&quot;BDVIPSheetName&quot;).ToString]">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -139,34 +144,34 @@
                         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
                             <ui:AssignOperation.To>
-                              <OutArgument x:TypeArguments="sd:DataColumn">[tempBdDT.Columns("fe_programacion")]</OutArgument>
+                              <OutArgument x:TypeArguments="sd:DataColumn">[vipBdDT.Columns("fe_programacion")]</OutArgument>
                             </ui:AssignOperation.To>
                             <ui:AssignOperation.Value>
-                              <InArgument x:TypeArguments="sd:DataColumn">[in_InputDataTable.DefaultView.ToTable(True,"Show_Time").Columns("Show_Time")]</InArgument>
+                              <InArgument x:TypeArguments="sd:DataColumn">[in_VIPDatatable.DefaultView.ToTable(True,"Show_Time").Columns("Show_Time")]</InArgument>
                             </ui:AssignOperation.Value>
                           </ui:AssignOperation>
                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
                             <ui:AssignOperation.To>
-                              <OutArgument x:TypeArguments="sd:DataColumn">[tempBdDT.Columns("CORREO")]</OutArgument>
+                              <OutArgument x:TypeArguments="sd:DataColumn">[vipBdDT.Columns("CORREO")]</OutArgument>
                             </ui:AssignOperation.To>
                             <ui:AssignOperation.Value>
-                              <InArgument x:TypeArguments="sd:DataColumn">[in_InputDataTable.DefaultView.ToTable(True,"Email").Columns("Email")]</InArgument>
+                              <InArgument x:TypeArguments="sd:DataColumn">[in_VIPDatatable.DefaultView.ToTable(True,"Email").Columns("Email")]</InArgument>
                             </ui:AssignOperation.Value>
                           </ui:AssignOperation>
                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
                             <ui:AssignOperation.To>
-                              <OutArgument x:TypeArguments="sd:DataColumn">[tempBdDT.Columns("pelicula")]</OutArgument>
+                              <OutArgument x:TypeArguments="sd:DataColumn">[vipBdDT.Columns("pelicula")]</OutArgument>
                             </ui:AssignOperation.To>
                             <ui:AssignOperation.Value>
-                              <InArgument x:TypeArguments="sd:DataColumn">[in_InputDataTable.DefaultView.ToTable(True,"Movie_Title").Columns("Movie_Title")]</InArgument>
+                              <InArgument x:TypeArguments="sd:DataColumn">[in_VIPDatatable.DefaultView.ToTable(True,"Movie_Title").Columns("Movie_Title")]</InArgument>
                             </ui:AssignOperation.Value>
                           </ui:AssignOperation>
                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
                             <ui:AssignOperation.To>
-                              <OutArgument x:TypeArguments="sd:DataColumn">[tempBdDT.Columns("CL_CINE")]</OutArgument>
+                              <OutArgument x:TypeArguments="sd:DataColumn">[vipBdDT.Columns("CL_CINE")]</OutArgument>
                             </ui:AssignOperation.To>
                             <ui:AssignOperation.Value>
-                              <InArgument x:TypeArguments="sd:DataColumn">[in_InputDataTable.DefaultView.ToTable(True,"Cinema_ID").Columns("Cinema_ID")]</InArgument>
+                              <InArgument x:TypeArguments="sd:DataColumn">[in_VIPDatatable.DefaultView.ToTable(True,"Cinema_ID").Columns("Cinema_ID")]</InArgument>
                             </ui:AssignOperation.Value>
                           </ui:AssignOperation>
                         </scg:List>
@@ -180,7 +185,7 @@
                     </ui:MultipleAssign>
                     <ui:InvokeCode ContinueOnError="{x:Null}" Code="var rand = new Random();&#xA;dataTable = dataTable.AsEnumerable().OrderBy(r =&gt; rand.Next()).CopyToDataTable();" DisplayName="Invoke code to randomize data rows" sap:VirtualizedContainerService.HintSize="334,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1" Language="CSharp">
                       <ui:InvokeCode.Arguments>
-                        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dataTable">[tempBdDT]</InOutArgument>
+                        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dataTable">[vipBdDT]</InOutArgument>
                       </ui:InvokeCode.Arguments>
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -191,18 +196,18 @@
                     </ui:InvokeCode>
                     <Assign DisplayName="Remove duplicate CORREO" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_1">
                       <Assign.To>
-                        <OutArgument x:TypeArguments="sd:DataTable">[tempBdDT]</OutArgument>
+                        <OutArgument x:TypeArguments="sd:DataTable">[vipBdDT]</OutArgument>
                       </Assign.To>
                       <Assign.Value>
-                        <InArgument x:TypeArguments="sd:DataTable">[tempBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
+                        <InArgument x:TypeArguments="sd:DataTable">[vipBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
                       </Assign.Value>
                     </Assign>
                     <Assign DisplayName="Remove duplicate CORREO" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_2">
                       <Assign.To>
-                        <OutArgument x:TypeArguments="sd:DataTable">[tempBdDT]</OutArgument>
+                        <OutArgument x:TypeArguments="sd:DataTable">[vipBdDT]</OutArgument>
                       </Assign.To>
                       <Assign.Value>
-                        <InArgument x:TypeArguments="sd:DataTable">[tempBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
+                        <InArgument x:TypeArguments="sd:DataTable">[vipBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
                       </Assign.Value>
                     </Assign>
                   </Sequence>
@@ -215,7 +220,7 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:ExcelApplicationScope>
-            <ui:FilterDataTable DataTable="[tempBdDT]" DisplayName="Remove rows wth empty EmailID" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="473,51" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[tempBdDT]" SelectColumnsMode="Keep">
+            <ui:FilterDataTable DataTable="[vipBdDT]" DisplayName="Remove rows wth empty EmailID" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="473,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[vipBdDT]" SelectColumnsMode="Keep">
               <ui:FilterDataTable.Filters>
                 <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
                   <ui:FilterOperationArgument Operand="{x:Null}" BooleanOperator="And" Operator="EMPTY">
@@ -232,7 +237,7 @@
               </ui:FilterDataTable.SelectColumns>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
@@ -249,7 +254,7 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:FilterDataTable DataTable="[tempBdDT]" DisplayName="Filter Data Table" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_2" OutputDataTable="[tempBdDT]" SelectColumnsMode="Keep">
+                    <ui:FilterDataTable DataTable="[vipBdDT]" DisplayName="Filter Data Table" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_2" OutputDataTable="[vipBdDT]" SelectColumnsMode="Keep">
                       <ui:FilterDataTable.Filters>
                         <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
                           <ui:FilterOperationArgument BooleanOperator="And" Operator="CONTAINS">
@@ -280,7 +285,7 @@
             </ui:ForEachRow>
             <ui:InvokeCode ContinueOnError="{x:Null}" Code="var rand = new Random();&#xA;dataTable = dataTable.AsEnumerable().OrderBy(r =&gt; rand.Next()).CopyToDataTable();" DisplayName="Invoke code to randomize datarows" sap:VirtualizedContainerService.HintSize="473,51" sap2010:WorkflowViewState.IdRef="InvokeCode_2" Language="CSharp">
               <ui:InvokeCode.Arguments>
-                <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dataTable">[tempBdDT]</InOutArgument>
+                <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dataTable">[vipBdDT]</InOutArgument>
               </ui:InvokeCode.Arguments>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -301,15 +306,15 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:InvokeWorkflowFile>
-            <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[tempBdDT]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[&quot;Data\Temp\&quot;+in_VIPBDFileName]" sap:VirtualizedContainerService.HintSize="473,51" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1">
+            <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[vipBdDT]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[&quot;Data\Temp\&quot;+in_VIPBDFileName]" sap:VirtualizedContainerService.HintSize="473,152" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:WriteCsvFile>
-            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[tempBdDT]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="473,272" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[vipBdDT]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="473,272" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
               <ui:ForEachRow.Body>
                 <ActivityAction x:TypeArguments="sd:DataRow">
                   <ActivityAction.Argument>
@@ -333,7 +338,7 @@
                 </ActivityAction>
               </ui:ForEachRow.Body>
             </ui:ForEachRow>
-            <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Write Temp sheet" sap:VirtualizedContainerService.HintSize="473,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[&quot;Data\Temp\&quot;+in_VIPBDFileName]">
+            <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Write Temp sheet" sap:VirtualizedContainerService.HintSize="473,288" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[&quot;Data\Temp\&quot;+in_VIPBDFileName]">
               <ui:ExcelApplicationScope.Body>
                 <ActivityAction x:TypeArguments="ui:WorkbookApplication">
                   <ActivityAction.Argument>
@@ -345,7 +350,7 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:ExcelWriteRange AddHeaders="True" DataTable="[tempBdDT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="[in_Config(&quot;TempSheetName&quot;).ToString]" StartingCell="A1">
+                    <ui:ExcelWriteRange AddHeaders="True" DataTable="[vipBdDT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="[in_Config(&quot;BDVIPSheetName&quot;).ToString]" StartingCell="A1">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -358,12 +363,12 @@
               </ui:ExcelApplicationScope.Body>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:ExcelApplicationScope>
-            <ui:FilterDataTable DataTable="[tempBdDT]" DisplayName="Filter NoSocios for #ND" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="473,51" sap2010:WorkflowViewState.IdRef="FilterDataTable_3" OutputDataTable="[NDMailsDT]" SelectColumnsMode="Keep">
+            <ui:FilterDataTable DataTable="[vipBdDT]" DisplayName="Filter NoSocios for #ND" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="473,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_3" OutputDataTable="[NDMailsDT]" SelectColumnsMode="Keep">
               <ui:FilterDataTable.Filters>
                 <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
                   <ui:FilterOperationArgument BooleanOperator="And" Operator="CONTAINS">
@@ -383,7 +388,7 @@
               </ui:FilterDataTable.SelectColumns>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
@@ -465,7 +470,7 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                   </ui:ExcelReadRange>
-                  <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_InputDataTable.DefaultView.ToTable(False,&quot;Name&quot;,&quot;DateTime&quot;)]" DisplayName="Write B2 Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]" StartingCell="B2">
+                  <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_VIPDatatable.DefaultView.ToTable(False,&quot;Name&quot;,&quot;DateTime&quot;)]" DisplayName="Write B2 Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]" StartingCell="B2">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -473,7 +478,7 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                   </ui:ExcelWriteRange>
-                  <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_InputDataTable.DefaultView.ToTable(false,&quot;EmailID&quot;,&quot;Company&quot;)]" DisplayName="Write E2 Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]" StartingCell="E2">
+                  <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_VIPDatatable.DefaultView.ToTable(false,&quot;EmailID&quot;,&quot;Company&quot;)]" DisplayName="Write E2 Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]" StartingCell="E2">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -481,7 +486,7 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                   </ui:ExcelWriteRange>
-                  <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_InputDataTable.DefaultView.ToTable(false,&quot;CL_CINE&quot;)]" DisplayName="Write I2 Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_4" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]" StartingCell="I2">
+                  <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_VIPDatatable.DefaultView.ToTable(false,&quot;CL_CINE&quot;)]" DisplayName="Write I2 Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_4" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]" StartingCell="I2">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -489,7 +494,7 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                   </ui:ExcelWriteRange>
-                  <ui:ExcelReadRange Range="{x:Null}" AddHeaders="True" DataTable="[tempBdDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_3" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]">
+                  <ui:ExcelReadRange Range="{x:Null}" AddHeaders="True" DataTable="[vipBdDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_3" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -499,7 +504,7 @@
                   </ui:ExcelReadRange>
                   <ui:InvokeCode ContinueOnError="{x:Null}" Code="var rand = new Random();&#xA;dataTable = dataTable.AsEnumerable().OrderBy(r =&gt; rand.Next()).CopyToDataTable();" DisplayName="Invoke code to randomize data rows" sap:VirtualizedContainerService.HintSize="334,164" sap2010:WorkflowViewState.IdRef="InvokeCode_3" Language="CSharp">
                     <ui:InvokeCode.Arguments>
-                      <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dataTable">[tempBdDT]</InOutArgument>
+                      <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dataTable">[vipBdDT]</InOutArgument>
                     </ui:InvokeCode.Arguments>
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -510,18 +515,18 @@
                   </ui:InvokeCode>
                   <Assign DisplayName="Remove duplicate CORREO" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_5">
                     <Assign.To>
-                      <OutArgument x:TypeArguments="sd:DataTable">[tempBdDT]</OutArgument>
+                      <OutArgument x:TypeArguments="sd:DataTable">[vipBdDT]</OutArgument>
                     </Assign.To>
                     <Assign.Value>
-                      <InArgument x:TypeArguments="sd:DataTable">[tempBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
+                      <InArgument x:TypeArguments="sd:DataTable">[vipBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
                     </Assign.Value>
                   </Assign>
                   <Assign DisplayName="Remove duplicate CORREO" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_6">
                     <Assign.To>
-                      <OutArgument x:TypeArguments="sd:DataTable">[tempBdDT]</OutArgument>
+                      <OutArgument x:TypeArguments="sd:DataTable">[vipBdDT]</OutArgument>
                     </Assign.To>
                     <Assign.Value>
-                      <InArgument x:TypeArguments="sd:DataTable">[tempBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
+                      <InArgument x:TypeArguments="sd:DataTable">[vipBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
                     </Assign.Value>
                   </Assign>
                 </Sequence>
@@ -542,7 +547,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:ReadRange>
-          <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[tempBdDT]" DisplayName="For Each Row in noSociosBdDT" sap:VirtualizedContainerService.HintSize="763,887" sap2010:WorkflowViewState.IdRef="ForEachRow_4">
+          <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[vipBdDT]" DisplayName="For Each Row in noSociosBdDT" sap:VirtualizedContainerService.HintSize="763,887" sap2010:WorkflowViewState.IdRef="ForEachRow_4">
             <ui:ForEachRow.Body>
               <ActivityAction x:TypeArguments="sd:DataRow">
                 <ActivityAction.Argument>
@@ -795,7 +800,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:ForEachRow>
-          <ui:FilterDataTable DataTable="[tempBdDT]" DisplayName="Remove rows wth empty EmailID" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="763,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_4" OutputDataTable="[tempBdDT]" SelectColumnsMode="Keep">
+          <ui:FilterDataTable DataTable="[vipBdDT]" DisplayName="Remove rows wth empty EmailID" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="763,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_4" OutputDataTable="[vipBdDT]" SelectColumnsMode="Keep">
             <ui:FilterDataTable.Filters>
               <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
                 <ui:FilterOperationArgument Operand="{x:Null}" BooleanOperator="And" Operator="EMPTY">
@@ -829,7 +834,7 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:FilterDataTable DataTable="[tempBdDT]" DisplayName="Filter Data Table" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_5" OutputDataTable="[tempBdDT]" SelectColumnsMode="Keep">
+                  <ui:FilterDataTable DataTable="[vipBdDT]" DisplayName="Filter Data Table" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_5" OutputDataTable="[vipBdDT]" SelectColumnsMode="Keep">
                     <ui:FilterDataTable.Filters>
                       <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
                         <ui:FilterOperationArgument BooleanOperator="And" Operator="CONTAINS">
@@ -860,7 +865,7 @@
           </ui:ForEachRow>
           <ui:InvokeCode ContinueOnError="{x:Null}" Code="var rand = new Random();&#xA;dataTable = dataTable.AsEnumerable().OrderBy(r =&gt; rand.Next()).CopyToDataTable();" DisplayName="Invoke code to randomize datarows" sap:VirtualizedContainerService.HintSize="763,51" sap2010:WorkflowViewState.IdRef="InvokeCode_4" Language="CSharp">
             <ui:InvokeCode.Arguments>
-              <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dataTable">[tempBdDT]</InOutArgument>
+              <InOutArgument x:TypeArguments="sd:DataTable" x:Key="dataTable">[vipBdDT]</InOutArgument>
             </ui:InvokeCode.Arguments>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -881,7 +886,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:InvokeWorkflowFile>
-          <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[tempBdDT]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[&quot;Data\Temp\&quot;+in_VIPBDFileName]" sap:VirtualizedContainerService.HintSize="763,51" sap2010:WorkflowViewState.IdRef="WriteCsvFile_2">
+          <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[vipBdDT]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[&quot;Data\Temp\&quot;+in_VIPBDFileName]" sap:VirtualizedContainerService.HintSize="763,51" sap2010:WorkflowViewState.IdRef="WriteCsvFile_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -901,7 +906,7 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:ExcelWriteRange AddHeaders="True" DataTable="[tempBdDT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_5" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]" StartingCell="A1">
+                  <ui:ExcelWriteRange AddHeaders="True" DataTable="[vipBdDT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_5" SheetName="[in_Config(&quot;TempPartnerSheetName&quot;).ToString]" StartingCell="A1">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -919,7 +924,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:ExcelApplicationScope>
-          <ui:FilterDataTable DataTable="[tempBdDT]" DisplayName="Filter NoSocios for #ND" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="763,51" sap2010:WorkflowViewState.IdRef="FilterDataTable_6" OutputDataTable="[NDMailsDT]" SelectColumnsMode="Keep">
+          <ui:FilterDataTable DataTable="[vipBdDT]" DisplayName="Filter NoSocios for #ND" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="763,51" sap2010:WorkflowViewState.IdRef="FilterDataTable_6" OutputDataTable="[NDMailsDT]" SelectColumnsMode="Keep">
             <ui:FilterDataTable.Filters>
               <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
                 <ui:FilterOperationArgument BooleanOperator="And" Operator="CONTAINS">

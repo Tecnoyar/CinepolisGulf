@@ -4,7 +4,7 @@
     <x:Property Name="out_InputDataTable" Type="InOutArgument(sd:DataTable)" />
     <x:Property Name="inputSheetName" Type="InArgument(x:String)" />
     <x:Property Name="in_InputFileName" Type="InArgument(x:String)" />
-    <x:Property Name="out_luxuryDataTable" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="out_VIPDataTable" Type="InOutArgument(sd:DataTable)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -74,6 +74,7 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>System.Memory</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="StandardiseInputData" sap:VirtualizedContainerService.HintSize="380,1554" sap2010:WorkflowViewState.IdRef="Sequence_4">
@@ -132,7 +133,7 @@
         </scg:List>
       </ui:FilterDataTable.SelectColumns>
     </ui:FilterDataTable>
-    <ui:FilterDataTable DataTable="[out_InputDataTable]" DisplayName="Filter luxury table" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="338,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_2" OutputDataTable="[out_luxuryDataTable]" SelectColumnsMode="Keep">
+    <ui:FilterDataTable DataTable="[out_InputDataTable]" DisplayName="Filter luxury table" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="338,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_2" OutputDataTable="[out_VIPDataTable]" SelectColumnsMode="Keep">
       <ui:FilterDataTable.Filters>
         <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
           <ui:FilterOperationArgument BooleanOperator="And" Operator="EQ">
@@ -182,12 +183,18 @@
         <InArgument x:TypeArguments="moie:Workbook" x:Key="workbook" />
         <InArgument x:TypeArguments="moie:Worksheet" x:Key="worksheet" />
         <InArgument x:TypeArguments="s:GC" x:Key="gc" />
-        <InArgument x:TypeArguments="x:String" x:Key="Filename">C:\Users\HP\Downloads\transactionReportsExcel05-12-2021.xlsx</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="Sheetname">Transaction</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="NewWorkSheetName">TRADICIONAL</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="Filename">
+          <Literal x:TypeArguments="x:String">C:\Users\HP\Downloads\transactionReportsExcel05-12-2021.xlsx</Literal>
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="Sheetname">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;InputSheetName&quot;).ToString" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="NewWorkSheetName">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;InputSheetNewName&quot;).ToString" />
+        </InArgument>
         <InArgument x:TypeArguments="moie:Application" x:Key="app" />
       </ui:InvokeCode.Arguments>
     </ui:InvokeCode>
-    <ui:WriteRange AddHeaders="True" DataTable="[out_luxuryDataTable]" DisplayName="Write manipulatedDataIntoInputExcelFile" sap:VirtualizedContainerService.HintSize="338,115" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="Luxury" StartingCell="A1" WorkbookPath="[&quot;C:\Users\&quot;+Environment.UserName+&quot;\Desktop\&quot;+Path.GetFileNameWithoutExtension(in_InputFileName)+&quot;.xlsx&quot;]" />
+    <ui:WriteRange AddHeaders="True" DataTable="[out_VIPDataTable]" DisplayName="Write manipulatedDataIntoInputExcelFile" sap:VirtualizedContainerService.HintSize="338,115" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="[in_Config(&quot;InputVIPSheetName&quot;).ToString]" StartingCell="A1" WorkbookPath="[&quot;C:\Users\&quot;+Environment.UserName+&quot;\Desktop\&quot;+Path.GetFileNameWithoutExtension(in_InputFileName)+&quot;.xlsx&quot;]" />
   </Sequence>
 </Activity>
