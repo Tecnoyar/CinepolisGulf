@@ -8,7 +8,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>712,2531</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>799,2439</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>workingWithTemplate_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="35">
@@ -81,9 +81,10 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>datatable_to_html</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="workingWithNoSociosDT" sap:VirtualizedContainerService.HintSize="557,2466" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="workingWithNoSociosDT" sap:VirtualizedContainerService.HintSize="557,2374" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="tempBdDT" />
       <Variable x:TypeArguments="sd:DataTable" Name="NDMailsDT" />
@@ -94,7 +95,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap:VirtualizedContainerService.HintSize="515,2374" sap2010:WorkflowViewState.IdRef="Sequence_16">
+    <Sequence sap:VirtualizedContainerService.HintSize="515,2282" sap2010:WorkflowViewState.IdRef="Sequence_16">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -109,13 +110,13 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:KillProcess>
-      <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application temp_BD" sap:VirtualizedContainerService.HintSize="473,1091" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[&quot;Data\Temp\&quot;+in_TempBDFileName]">
+      <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application temp_BD" sap:VirtualizedContainerService.HintSize="473,991" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[&quot;Data\Temp\&quot;+in_TempBDFileName]">
         <ui:ExcelApplicationScope.Body>
           <ActivityAction x:TypeArguments="ui:WorkbookApplication">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,982" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,882" sap2010:WorkflowViewState.IdRef="Sequence_3">
               <Sequence.Variables>
                 <Variable x:TypeArguments="x:Int32" Name="currentInx" />
               </Sequence.Variables>
@@ -250,15 +251,7 @@ Select  extractedInputTable.Rows.Add(ra)).copytodatatable]</InArgument>
                   <OutArgument x:TypeArguments="sd:DataTable">[tempBdDT]</OutArgument>
                 </Assign.To>
                 <Assign.Value>
-                  <InArgument x:TypeArguments="sd:DataTable">[tempBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign DisplayName="Remove duplicate CORREO" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_10">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="sd:DataTable">[tempBdDT]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="sd:DataTable">[tempBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
+                  <InArgument x:TypeArguments="sd:DataTable">[tempBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO").ToLower.Trim).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
                 </Assign.Value>
               </Assign>
             </Sequence>
@@ -271,7 +264,7 @@ Select  extractedInputTable.Rows.Add(ra)).copytodatatable]</InArgument>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:ExcelApplicationScope>
-      <ui:FilterDataTable DataTable="[tempBdDT]" DisplayName="Remove rows wth empty EmailID" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="473,51" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[tempBdDT]" SelectColumnsMode="Keep">
+      <ui:FilterDataTable DataTable="[tempBdDT]" DisplayName="Remove rows wth empty EmailID" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="473,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[tempBdDT]" SelectColumnsMode="Keep">
         <ui:FilterDataTable.Filters>
           <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
             <ui:FilterOperationArgument Operand="{x:Null}" BooleanOperator="And" Operator="EMPTY">
@@ -288,7 +281,7 @@ Select  extractedInputTable.Rows.Add(ra)).copytodatatable]</InArgument>
         </ui:FilterDataTable.SelectColumns>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>

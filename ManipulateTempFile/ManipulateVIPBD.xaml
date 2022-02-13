@@ -8,7 +8,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>901,3823</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>875,3723</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ManipulateVIPBD_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="31">
@@ -77,7 +77,7 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ManipulateVIPBD" sap:VirtualizedContainerService.HintSize="885,3758" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="ManipulateVIPBD" sap:VirtualizedContainerService.HintSize="885,3658" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="vipBdDT" />
     </Sequence.Variables>
@@ -86,7 +86,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap:VirtualizedContainerService.HintSize="843,3666" sap2010:WorkflowViewState.IdRef="Sequence_7">
+    <Sequence sap:VirtualizedContainerService.HintSize="843,3566" sap2010:WorkflowViewState.IdRef="Sequence_7">
       <Sequence.Variables>
         <Variable x:TypeArguments="sd:DataTable" Name="NDMailsDT" />
       </Sequence.Variables>
@@ -104,13 +104,13 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:KillProcess>
-      <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application temp_BD" sap:VirtualizedContainerService.HintSize="801,1970" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[&quot;Data\Temp\&quot;+in_VIPBDFileName]">
+      <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application temp_BD" sap:VirtualizedContainerService.HintSize="801,1870" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[&quot;Data\Temp\&quot;+in_VIPBDFileName]">
         <ui:ExcelApplicationScope.Body>
           <ActivityAction x:TypeArguments="ui:WorkbookApplication">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="767,1861" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="767,1761" sap2010:WorkflowViewState.IdRef="Sequence_2">
               <Sequence.Variables>
                 <Variable x:TypeArguments="sd:DataTable" Name="extractedInputTable" />
                 <Variable x:TypeArguments="x:Int32" Name="currentInx" />
@@ -283,15 +283,7 @@ Select  extractedInputTable.Rows.Add(ra)).copytodatatable]</InArgument>
                   <OutArgument x:TypeArguments="sd:DataTable">[vipBdDT]</OutArgument>
                 </Assign.To>
                 <Assign.Value>
-                  <InArgument x:TypeArguments="sd:DataTable">[vipBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign DisplayName="Remove duplicate CORREO" sap:VirtualizedContainerService.HintSize="725,60" sap2010:WorkflowViewState.IdRef="Assign_2">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="sd:DataTable">[vipBdDT]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="sd:DataTable">[vipBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO")).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
+                  <InArgument x:TypeArguments="sd:DataTable">[vipBdDT.AsEnumerable().GroupBy(Function(a) a.Field(Of String)("CORREO").ToLower.Trim).Select(Function(b) b.First).CopyToDataTable()]</InArgument>
                 </Assign.Value>
               </Assign>
             </Sequence>

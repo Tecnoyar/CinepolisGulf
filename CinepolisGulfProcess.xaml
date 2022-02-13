@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="CinepolisArgentina" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="993,1547" sap2010:WorkflowViewState.IdRef="CinepolisArgentina_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="CinepolisArgentina" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="799,1547" sap2010:WorkflowViewState.IdRef="CinepolisArgentina_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="56">
       <x:String>System.Activities</x:String>
@@ -185,14 +185,26 @@
                       <av:PointCollection x:Key="ConnectorLocation">300,576 300,626.5</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke StandardiseInputData workflow" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="ManipulateInputFile\StandardiseInputData.xaml">
+                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke StandardiseInputData workflow" sap:VirtualizedContainerService.HintSize="360,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="ManipulateInputFile\StandardiseInputData.xaml">
                     <ui:InvokeWorkflowFile.Arguments>
-                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[config]</InArgument>
-                      <InOutArgument x:TypeArguments="sd:DataTable" x:Key="out_InputDataTable">[inputDataTable]</InOutArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="inputSheetName">[config("InputSheetName").ToString]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_InputFileName">["Data\Input\"+inputFileName]</InArgument>
-                      <InOutArgument x:TypeArguments="sd:DataTable" x:Key="out_VIPDataTable">[vipDataTable]</InOutArgument>
-                      <OutArgument x:TypeArguments="x:Boolean" x:Key="out_InputDataExist">[inputDataExistFlag]</OutArgument>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
+                        <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="config" />
+                      </InArgument>
+                      <InOutArgument x:TypeArguments="sd:DataTable" x:Key="out_InputDataTable">
+                        <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="inputDataTable" />
+                      </InOutArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="inputSheetName">
+                        <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="config(&quot;InputSheetName&quot;).ToString" />
+                      </InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_InputFileName">
+                        <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="&quot;Data\Input\&quot;+inputFileName" />
+                      </InArgument>
+                      <InOutArgument x:TypeArguments="sd:DataTable" x:Key="out_VIPDataTable">
+                        <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="vipDataTable" />
+                      </InOutArgument>
+                      <OutArgument x:TypeArguments="x:Boolean" x:Key="out_InputDataExist">
+                        <mva:VisualBasicReference x:TypeArguments="x:Boolean" ExpressionText="inputDataExistFlag" />
+                      </OutArgument>
                     </ui:InvokeWorkflowFile.Arguments>
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -258,10 +270,7 @@
                                 </sap:WorkflowViewStateService.ViewState>
                               </ui:InvokeWorkflowFile>
                               <FlowStep.Next>
-                                <FlowDecision x:Name="__ReferenceID9" DisplayName="Flow Decision- VIP data not exist" sap:VirtualizedContainerService.HintSize="160,87" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
-                                  <FlowDecision.Condition>
-                                    <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="vipDataTable is Nothing or vipDataTable.Rows.Count&lt;1 or String.IsNullOrEmpty(vipBDFileName)" />
-                                  </FlowDecision.Condition>
+                                <FlowDecision x:Name="__ReferenceID9" Condition="[vipDataTable is Nothing or vipDataTable.Rows.Count&lt;1 or String.IsNullOrEmpty(vipBDFileName)]" DisplayName="Flow Decision- VIP data not exist" sap:VirtualizedContainerService.HintSize="160,87" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>

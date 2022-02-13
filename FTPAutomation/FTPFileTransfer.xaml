@@ -9,7 +9,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>993,2532</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>813,2532</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>FTPConnect_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="31">
@@ -174,7 +174,7 @@
             </sap:WorkflowViewStateService.ViewState>
             <ui:RemoveFile Host="{x:Null}" KeyFiles="{x:Null}" Password="{x:Null}" Port="{x:Null}" Username="{x:Null}" DisplayName="Remove previous inputfile" sap:VirtualizedContainerService.HintSize="663,87" sap2010:WorkflowViewState.IdRef="RemoveFile_1" RemotePath="[in_Config(&quot;InputnonPartnerFilePath&quot;).ToString+&quot;/&quot;+in_InputFileName]" SecureFTP="False" />
             <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="663,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;uploading input file&quot;]" />
-            <ui:Upload Host="{x:Null}" KeyFiles="{x:Null}" NotUploadedFiles="{x:Null}" Password="{x:Null}" Port="{x:Null}" UploadedFiles="{x:Null}" Username="{x:Null}" sap:VirtualizedContainerService.HintSize="663,115" sap2010:WorkflowViewState.IdRef="Upload_1" LocalPath="[Directory.GetCurrentDirectory+&quot;\Data\Temp\&quot;+in_InputFileName]" RemotePath="[in_Config(&quot;InputnonPartnerFilePath&quot;).ToString]" SecureFTP="True" />
+            <ui:Upload Host="{x:Null}" KeyFiles="{x:Null}" NotUploadedFiles="{x:Null}" Password="{x:Null}" Port="{x:Null}" UploadedFiles="{x:Null}" Username="{x:Null}" sap:VirtualizedContainerService.HintSize="663,115" sap2010:WorkflowViewState.IdRef="Upload_1" LocalPath="[Directory.GetCurrentDirectory+&quot;\Data\Input\&quot;+in_InputFileName]" RemotePath="[in_Config(&quot;InputnonPartnerFilePath&quot;).ToString]" SecureFTP="True" />
             <ui:RemoveFile Host="{x:Null}" KeyFiles="{x:Null}" Password="{x:Null}" Port="{x:Null}" Username="{x:Null}" DisplayName="Remove temp" sap:VirtualizedContainerService.HintSize="663,87" sap2010:WorkflowViewState.IdRef="RemoveFile_3" RemotePath="[in_Config(&quot;BDTempFilePath&quot;).ToString+&quot;/&quot;+in_TempBDFileName]" SecureFTP="False" />
             <ui:Upload Host="{x:Null}" KeyFiles="{x:Null}" NotUploadedFiles="{x:Null}" Password="{x:Null}" Port="{x:Null}" UploadedFiles="{x:Null}" Username="{x:Null}" sap:VirtualizedContainerService.HintSize="663,115" sap2010:WorkflowViewState.IdRef="Upload_3" LocalPath="[&quot;Data\Temp\&quot;+in_TempBDFileName]" RemotePath="[in_Config(&quot;BDTempFilePath&quot;).ToString]" SecureFTP="True" />
             <If Condition="[String.IsNullOrEmpty( in_VIPBDFileName)]" sap:VirtualizedContainerService.HintSize="663,491" sap2010:WorkflowViewState.IdRef="If_2">
