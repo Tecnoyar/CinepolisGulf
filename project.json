@@ -18,6 +18,7 @@
   "runtimeOptions": {
     "autoDispose": false,
     "isPausable": true,
+    "isAttended": false,
     "requiresUserInteraction": true,
     "supportsPersistence": false,
     "excludedLoggedData": [
@@ -26,7 +27,8 @@
     ],
     "executionType": "Workflow",
     "readyForPiP": false,
-    "startsInPiP": false
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": false
   },
   "designOptions": {
     "projectProfile": "Developement",
@@ -64,6 +66,12 @@
     {
       "filePath": "CinepolisGulf.xaml",
       "uniqueId": "7d489135-ddd2-43cb-a874-2efd38efd9a2",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "CinepolisGulfProcess.xaml",
+      "uniqueId": "78d3d52a-fe07-4746-b9c1-7791dec22157",
       "input": [],
       "output": []
     }
